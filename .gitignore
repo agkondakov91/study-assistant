@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+catalog.json
+try.py
+.env
+.idea/
+.vscode/
+.solution/

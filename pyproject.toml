@@ -1,0 +1,36 @@
+[project]
+name = "study-assistant"
+version = "0.1.0"
+description = "Ассистент по учебным материалам — курсовой проект"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1",
+    "ruff>=0.16",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --tb=short --no-header"
+pythonpath = ["."]
+markers = [
+    "stage1: этап 1 — каталог материалов",
+    "stage2: этап 2 — материал как объект",
+    "stage3: этап 3 — источник материалов",
+    "stage4: этап 4 — поиск по материалам",
+    "stage5: этап 5 — запросы к модели",
+    "stage6: этап 6 — Telegram-бот и оценка качества",
+    "contract: поведение программы, неизменное на всех этапах",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B"]
+
+[tool.ruff.format]
+quote-style = "double"
