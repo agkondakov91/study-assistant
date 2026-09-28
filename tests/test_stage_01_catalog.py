@@ -4,9 +4,10 @@
 Запуск только этих тестов: uv run pytest -m stage1
 
 Внимание: на этапе 2 контракт read_material меняется — она начинает
-возвращать объект Material вместо словаря. Тесты, помеченные
-stage1_dict, после этого перестают быть актуальными: удалите их,
-когда перейдёте к этапу 2. Это нормальная инженерная ситуация —
+возвращать объект Material вместо словаря. Ранее написанные тесты
+после этого перестают быть актуальными: удалите их, и раскомментируйте
+закомментированные сейчас тесты, когда перейдёте к этапу 2.
+Это нормальная инженерная ситуация —
 изменение контракта требует изменения тестов.
 """
 
@@ -27,12 +28,19 @@ def test_reads_regular_file(functions_md):
     expected = EXPECTED["functions.md"]
 
     assert result["title"] == expected["title"]
+    # assert result.title == expected["title"]
     assert result["lines"] == expected["lines"], (
         "lines считает только непустые строки — "
         "в файлах материалов есть пустые строки внутри текста"
     )
+    # assert result.lines == expected["lines"], (
+    #     "lines считает только непустые строки — "
+    #     "в файлах материалов есть пустые строки внутри текста"
+    # )
     assert result["words"] == expected["words"]
+    # assert result.words == expected["words"]
     assert result["chars"] == expected["chars"], "chars считает все символы, включая переводы строк"
+    # assert result.chars == expected["chars"], "chars считает все символы, включая переводы строк"
 
 
 def test_reads_empty_file(empty_md):
@@ -45,6 +53,10 @@ def test_reads_empty_file(empty_md):
     assert result["lines"] == 0
     assert result["words"] == 0
     assert result["chars"] == 0
+    # assert result.title == EMPTY_TITLE
+    # assert result.lines == 0
+    # assert result.words == 0
+    # assert result.chars == 0
 
 
 def test_catalog_collects_all_files(materials_dir):
@@ -55,6 +67,7 @@ def test_catalog_collects_all_files(materials_dir):
 
     assert len(catalog) == len(FILES_IN_ORDER)
     assert [item["file"] for item in catalog] == FILES_IN_ORDER
+    # assert [item.file for item in catalog] == FILES_IN_ORDER
 
 
 def test_missing_folder_raises_error(tmp_path):
@@ -80,6 +93,9 @@ def test_json_round_trip(tmp_path, materials_dir):
     loaded = load_catalog(path)
 
     assert loaded == catalog, "после записи и чтения данные изменились"
+    # assert loaded == [item.to_dict() for item in catalog], (
+    #     "после записи и чтения данные изменились"
+    # )
 
 
 def test_json_is_human_readable(tmp_path, materials_dir):

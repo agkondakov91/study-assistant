@@ -4,6 +4,9 @@
 Проверка: uv run pytest -m stage1
 """
 
+# noqa ниже отключает замечание линтера: в заготовке json ещё нигде
+# не используется. Когда напишете save_catalog — удалите комментарий.
+import json  # noqa: F401
 from pathlib import Path
 
 MATERIALS_DIR = Path("materials")
